@@ -1,0 +1,90 @@
+﻿@model IEnumerable<SalesRecordModel>
+@{
+    ViewData["Title"] = "Simples Search";
+    var cultureInfo = new System.Globalization.CultureInfo("pt-BR");
+}
+
+<br />
+<br />
+<h1>@ViewData["Title"]</h1>
+
+<nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container">
+        <form asp-action="SimpleSearch" method="post" class="form-inline">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="minDate">Min Date</label>
+                    <input type="date" class="form-control" name="minDate" value=@ViewData["minDate"] />
+                </div>
+                <div class="form-group">
+                    <label for="maxDate">Max Date</label>
+                    <input type="date" class="form-control" name="maxDate" value=@ViewData["maxDate"] />
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <br>
+        </form>
+    </div>
+</nav>
+
+<br />
+<br />
+<div class="panel panel-primary">
+   
+    <div class="panel-body">
+        <table class="table table-Primary" id="minha-tabela">
+            <thead>
+                <tr class="table-primary">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SellerModel.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SellerModel.Department)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-dark">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @item.Date.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SellerModel.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SellerModel.Department.Name)
+                        </td>
+                        <td>
+                            @string.Format(cultureInfo, "{0:C}", item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <div class="panel-heading">
+            <h3 class="panel-title">Total sales: @Model.Sum(obj => obj.Amount).ToString("F2")</h3>
+        </div>
+    </div>
+</div>

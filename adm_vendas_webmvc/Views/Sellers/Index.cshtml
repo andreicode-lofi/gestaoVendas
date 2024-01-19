@@ -1,0 +1,46 @@
+﻿@model IEnumerable<SellerModel>
+
+@{
+    ViewData["Title"] = "Index";
+    var cultureInfo = new System.Globalization.CultureInfo("pt-BR");// Define o CultureInfo para o Brasil (pt-BR) para formatar o valor como moeda brasileira
+}
+
+<br />
+<br />
+<h1>Sellers</h1>
+<br />
+<a asp-action="Create" type="button" class="btn btn-outline-primary">Create new sellers</a>
+<br />
+<br />
+
+<table class="table table-Primary" id="minha-tabela">
+    <thead>
+        <tr class="table-primary">
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">BirthDate</th>
+            <th scope="col">Base Salary</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if(Model != null && Model.Any())
+        {
+            @foreach(var item in Model)
+            {
+                <tr class="table-dark">
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.BirthDate.ToString("dd/MM/yyyy")</td>
+                    <td>@string.Format(cultureInfo, "{0:C}", item.BaseSalary) </td>
+                    <td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a> </td>
+                    <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+                    <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

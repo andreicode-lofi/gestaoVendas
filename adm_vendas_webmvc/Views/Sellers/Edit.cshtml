@@ -1,0 +1,64 @@
+﻿@model adm_vendas_webmvc.Models.ViewModel.SellerFormViewModel
+@{
+    ViewData["Title"] = "Edit Sellers";
+    var cultureInfo = new System.Globalization.CultureInfo("pt-BR");// Define o CultureInfo para o Brasil (pt-BR) para formatar o valor como moeda brasileira
+}
+<br />
+<br />
+<h1>Edit sellers</h1>
+
+<form asp-action="Edit" method="Post" asp-route-id="@Model.SellerModel.Id">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden"  asp-for="SellerModel.Id" />
+
+    <div class="form-group">
+        <label asp-for="SellerModel.Name" class="form-label mt-4">Name</label>
+        <input asp-for="SellerModel.Name" type="text" class="form-control col-sm-6" placeholder="Name">
+        <span asp-validation-for="SellerModel.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SellerModel.Email" class="form-label mt-4">Email</label>
+        <input asp-for="SellerModel.Email" type="email" class="form-control col-sm-6" placeholder="Email">
+        <span asp-validation-for="SellerModel.Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SellerModel.BirthDate" class="form-label mt-4">BirthDate</label>
+        <input asp-for="SellerModel.BirthDate" type="date" class="form-control col-sm-6" aria-describedby="emailHelp" placeholder="BirthDate">
+        <span asp-validation-for="SellerModel.BirthDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SellerModel.BaseSalary" class="form-label mt-2">Base salary</label>
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input asp-for="SellerModel.BaseSalary" type="text" class="form-control col-sm-5" aria-label="Amount (to the nearest dollar)">
+                <span class="input-group-text">.00</span>
+            </div>
+        </div>
+        <span asp-validation-for="SellerModel.BaseSalary" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SellerModel.DepartmentModelId" class="form-label mt-4">Select Departament</label>
+        <br />
+        <select asp-for="SellerModel.DepartmentModelId" asp-items="@(new SelectList(Model.DepartmentsModel,"Id", "Name"))" class="form-select col-sm-6">
+            <option></option>
+        </select>
+    </div> 
+
+    <div class="form-group">
+        <input type="submit" value="Edit now" class="btn btn-outline-primary"  />
+    </div>
+</form>
+
+<a asp-action="Index" type="submit" class="btn btn-outline-primary">Back to List</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

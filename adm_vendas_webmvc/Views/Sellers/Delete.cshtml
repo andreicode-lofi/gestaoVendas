@@ -1,0 +1,54 @@
+﻿@model adm_vendas_webmvc.Models.SellerModel
+@{
+    ViewData["Title"] = "Delete Sellers";
+    var cultureInfo = new System.Globalization.CultureInfo("pt-BR");// Define o CultureInfo para o Brasil (pt-BR) para formatar o valor como moeda brasileira
+}
+<br />
+<br />
+<h1>Delete sellers</h1>
+<br />
+<br />
+<div class="dark">
+
+    <h1>Do you really want to delete @Model.Name from the seller list?</h1>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd>
+            @Model.BirthDate.ToString("dd/MM/yyyy")
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.BaseSalary)
+        </dt>
+        <dd>
+            @string.Format(cultureInfo, "{0:C}",Model.BaseSalary)
+        </dd>
+    </dl>
+
+    <form asp-action="PostDelete" method="post">
+       <input type="hidden" asp-for="@Model.Id" />
+        <input type="submit" value="Delete now" class="btn btn-outline-primary" />
+        <a asp-action="Index" type="submit" class="btn btn-outline-primary">Back to List</a>
+
+    </form>
+
+
+</div>
